@@ -1,7 +1,7 @@
 package net.virtualinfinity.atrobots.computer;
 
 import net.virtualinfinity.atrobots.measures.Duration;
-import net.virtualinfinity.atrobots.ports.InvalidPort;
+//import net.virtualinfinity.atrobots.ports.InvalidPort; // import does not exist 
 import net.virtualinfinity.atrobots.ports.PortHandler;
 import net.virtualinfinity.atrobots.ports.PortListener;
 
@@ -14,7 +14,9 @@ import java.util.Map;
  *
  * @author Daniel Pitts
  */
-public class Computer implements PortListener, Restartable {
+
+ //add exdends from PortHandler
+public class Computer extends PortHandler implements PortListener, Restartable {
     private Memory memory;
     private Registers registers;
     private StackMemory stack;
@@ -232,7 +234,7 @@ public class Computer implements PortListener, Restartable {
     }
 
     public PortHandler createDefaultPortHandler() {
-        return new Computer().setPortListener(Computer.this);
+        return new Computer(this.debugInfo).setPortListener(Computer.this);
     }
 
     public MemoryRegion getCommQueueMemoryRegion() {
@@ -400,7 +402,12 @@ public class Computer implements PortListener, Restartable {
         }
     }
 
-	public Computer() {
+
+    // set the previous used debugInfio variable
+	public Computer(DebugInfo debugInfo) {
+
+        this.debugInfo = debugInfo;
+        
 	    }
 
 }
